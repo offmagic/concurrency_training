@@ -1,7 +1,6 @@
 package training.concurrency.ex_3;
 
 
-
 import training.concurrency.ex_3.cache.LoadableCache;
 import training.concurrency.ex_3.cache.LoadableCacheImpl;
 import training.concurrency.ex_3.loader.SquareNumberLoader;
@@ -19,16 +18,19 @@ import java.util.concurrent.Executors;
 public class TestCache {
 
     public static void main(String[] args) {
-        LoadableCache<Integer> cache = new LoadableCacheImpl<>(new SquareNumberLoader(), 20);
+        long cachedValueExpirationTimeout = 30;
+        long calculationTime = 3; // emulate long running computation
+        LoadableCache<Integer> cache = new LoadableCacheImpl<>(new SquareNumberLoader(calculationTime), cachedValueExpirationTimeout);
 
-        // start consumer tasks
+        // start 10 consumer tasks
         ExecutorService consumerExecutor = Executors.newFixedThreadPool(10);
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             consumerExecutor.submit(new ConsumerTask(cache));
         }
 
-        // start invalidate task
+        // start 1 invalidate task
         ExecutorService invalidateCacheExecutor = Executors.newFixedThreadPool(1);
-        invalidateCacheExecutor.submit(new InvalidateTask(cache, 10));
+        int invalidateTimeout = 10; // check and invalidate values if it needed
+        invalidateCacheExecutor.submit(new InvalidateTask(cache, invalidateTimeout));
     }
 }
