@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
-import static training.concurrency.ex_3.utils.LogMessageTools.getNameCurrentThread;
+import static training.concurrency.utils.LogMessageTools.getNameCurrentThread;
 
 /**
  * Class is intended to provide lazy-cache which is able to load its value on demand.

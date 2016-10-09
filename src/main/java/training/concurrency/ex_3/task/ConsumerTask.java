@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static training.concurrency.ex_3.utils.LogMessageTools.getNameCurrentThread;
+import static training.concurrency.utils.LogMessageTools.getNameCurrentThread;
 
 /**
  * Task for consuming cached values.

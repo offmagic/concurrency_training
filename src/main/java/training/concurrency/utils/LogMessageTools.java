@@ -1,4 +1,4 @@
-package training.concurrency.ex_3.utils;
+package training.concurrency.utils;
 
 import net.jcip.annotations.ThreadSafe;
 
