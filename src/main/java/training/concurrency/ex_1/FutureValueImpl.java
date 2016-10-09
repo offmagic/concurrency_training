@@ -10,7 +10,9 @@ import java.util.concurrent.locks.ReentrantLock;
 import static training.concurrency.utils.LogMessageTools.getNameCurrentThread;
 
 /**
- * @param <V>
+ * Implementation {@link FutureValue} interface.
+ *
+ * @param <V> type of future value
  */
 public class FutureValueImpl<V> implements FutureValue<V> {
 
