@@ -4,7 +4,6 @@ import net.jcip.annotations.ThreadSafe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
@@ -88,7 +87,7 @@ public class LoadableCacheImpl<V> implements LoadableCache<V> {
             return existingCachedValue.retrieveResult();
         } catch (ExecutionException ex) {
             cache.remove(key); // give chance to other threads to compute value later
-            throw new IllegalStateException("Thread " + getNameCurrentThread() +  "Error occurred during computation.");
+            throw new IllegalStateException("Thread " + getNameCurrentThread() + "Error occurred during computation.");
         }
     }
 
@@ -117,7 +116,8 @@ public class LoadableCacheImpl<V> implements LoadableCache<V> {
 
     @Override
     public void resetAllExpiredValues() {
-        // copy all keys in another collection, because other threads can exec reset method, and our iterator will break.
-        new HashSet<>(cache.keySet()).forEach(this::reset);
+        // no need full copy key set, because keySet method for ConcurrentHashMap returns weakly consistent iterator and
+        // there isn't java.util.ConcurrentModificationException during exec this method.
+        cache.keySet().forEach(this::reset);
     }
 }
